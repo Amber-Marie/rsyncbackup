@@ -22,4 +22,22 @@ Type in
 This now shows that the modified file is ready to be pulled down to
 the working directory using
 	git commit
+		[master 1987683] Updated file using Amber-Marie-patch-1 (405e558)
+		Committer: root <root@system2.hosted-systems.co.uk>
+		Your name and email address were configured automatically based
+		on your username and hostname. Please check that they are accurate.
+		You can suppress this message by setting them explicitly:
+		
+		git config --global user.name "Your Name"
+		git config --global user.email you@example.com
+		
+		After doing this, you may fix the identity used for this commit with:
+		
+		git commit --amend --reset-author
+		
+		1 file changed, 0 insertions(+), 0 deletions(-)
+		mode change 100644 => 100755 rsyncbackup.sh
+	git push
+	
+
   
