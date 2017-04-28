@@ -8,5 +8,7 @@ To make the script run at 23:30hrs (11:30pm) Every day, add the following
 with crontab -e
   30 23 * * * /home/shared/scripts/rsyncbackup.sh >/dev/null 2>&1
 Set the required directories
+  yum -y install git
   mkdir -p /home/shared/scripts/
+  git clone https://github.com/Amber-Marie/rsyncbackup.git rsyncbackup
   
