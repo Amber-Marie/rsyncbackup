@@ -12,3 +12,6 @@ Set the required directories
 	mkdir -p /home/shared/scripts/
 	git clone https://github.com/Amber-Marie/rsyncbackup.git /home/shared/scripts/rsyncbackup
 	chmod +x /home/shared/scripts/rsyncbackup/rsyncbackup.sh
+
+Then use the following command to run backup
+	/home/shared/scripts/rsyncbackup/rsyncbackup.sh
