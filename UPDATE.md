@@ -37,7 +37,7 @@ the working directory using
 		
 		1 file changed, 0 insertions(+), 0 deletions(-)
 		mode change 100644 => 100755 rsyncbackup.sh
-	git push
+	git pull
 	
 
   
