@@ -1,6 +1,8 @@
 #!/bin/bash
 DAY=$(date +"%u-%A")
 RUNDATE=$(date +"%A %d %m %Y")
+mkdir -p /home/shared/log_files/
+mkdir -p /home/shared/rbackup/daily/
 logfile="/home/shared/log_files/rsyncbackup.log"
 # rexclude='{"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*"}'
 # rexclude='--exclude={\"/home/shared/Backups/*\",\"/home/shared/oldstuff/*\",\"/dev/*\",\"/proc/*\",\"/sys/*\",\"/tmp/*\",\"/run/*\",\"/mnt/*\",\"/media/*\",\"/lost+found\",\"/home/shared/rbackup/*\",\"/home/shared/CentOS/*\"}'
