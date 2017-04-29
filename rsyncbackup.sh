@@ -34,7 +34,7 @@ if [ "$DAY" == "6-Saturday" ]; then
 	    echo " Start Time: $RUNTIME hrs" >> $logfile 2>&1
 	    echo "  using: mkdir -p $weekDest/$WEEK" >> $logfile 2>&1
 	    mkdir -p $weekDest/$WEEK
-	    echo "         cp -r $rdest/* $weekDest/$WEEK"
+	    echo "         cp -r $rdest/* $weekDest/$WEEK" >> $logfile 2>&1
 	    cp -r $rdest/* $weekDest/$WEEK
 	    RUNTIME=$(date +"%H%M")
 	    echo " End Time: $RUNTIME hrs" >> $logfile 2>&1
