@@ -157,7 +157,8 @@ do
 				case $nropt in
 					*-*)
 						echo "Restore of directory $nropt selected"
-						echo "/usr/bin/rsync $roptions --exclude=$rexclude --delete /home/shared/rbackup/daily/$nropt /"
+						# echo "/usr/bin/rsync $roptions --exclude=$rexclude --delete /home/shared/rbackup/daily/$nropt /"
+						echo "/usr/bin/rsync $roptions --delete $nropt /"
 						pause
 					;;
 					"Quit")
