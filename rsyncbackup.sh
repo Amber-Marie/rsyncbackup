@@ -1,7 +1,7 @@
 #!/bin/bash
 DAY=$(date +"%u-%A")
 RUNDATE=$(date +"%A %d %m %Y")
-WEEK=$(date +"WEEK-%W[%d-%b%Y]")
+WEEK=$(date +"WEEK-%W[%d-%b-%Y]")
 mkdir -p /home/shared/log_files/
 mkdir -p /home/shared/rbackup/daily/
 mkdir -p /home/shared/rbackup/weekly/
