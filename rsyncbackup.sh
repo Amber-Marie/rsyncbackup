@@ -40,7 +40,7 @@ if [ "$DAY" == "6-Saturday" ]; then
 	    echo " End Time: $RUNTIME hrs" >> $logfile 2>&1
 	    echo "" >> $logfile 2>&1
 fi
-exit
+
 if [ "$RUN_BY_CRON" == "TRUE" ] ; then
             RUNTIME=$(date +"%H%M")
             echo "$RUNDATE" >> $logfile 2>&1
