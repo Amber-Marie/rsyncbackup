@@ -1,8 +1,10 @@
 #!/bin/bash
 DAY=$(date +"%u-%A")
 RUNDATE=$(date +"%A %d %m %Y")
+WEEK=$(date +"WEEK-%W[%d-%b%Y]")
 mkdir -p /home/shared/log_files/
 mkdir -p /home/shared/rbackup/daily/
+mkdir -p /home/shared/rbackup/weekly/
 logfile="/home/shared/log_files/rsyncbackup.log"
 # rexclude='{"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*"}'
 # rexclude='--exclude={\"/home/shared/Backups/*\",\"/home/shared/oldstuff/*\",\"/dev/*\",\"/proc/*\",\"/sys/*\",\"/tmp/*\",\"/run/*\",\"/mnt/*\",\"/media/*\",\"/lost+found\",\"/home/shared/rbackup/*\",\"/home/shared/CentOS/*\"}'
@@ -13,6 +15,7 @@ roptions="-aAXHvq"
 rsource="/"
 rdest="/home/shared/rbackup/daily/$DAY"
 rsnapshot="/home/shared/rbackup/daily/0-snapshot"
+weekDest="/home/shared/rbackup/weekly"
 
 pause()
 {
@@ -24,6 +27,20 @@ fi
 
 check()
 {
+if [ "$DAY" == "6-Saturday" ]; then
+	    echo "$RUNDATE" >> $logfile 2>&1
+	    echo " Moving Saturdays files to weekly" >> $logfile 2>&1
+	    RUNTIME=$(date +"%H%M")
+	    echo " Start Time: $RUNTIME hrs" >> $logfile 2>&1
+	    echo "  using: mkdir -p $weekDest/$WEEK" >> $logfile 2>&1
+	    mkdir -p $weekDest/$WEEK
+	    echo "         cp -r $rdest/* $weekDest/$WEEK"
+	    cp -r $rdest/* $weekDest/$WEEK
+	    RUNTIME=$(date +"%H%M")
+	    echo " End Time: $RUNTIME hrs" >> $logfile 2>&1
+	    echo "" >> $logfile 2>&1
+fi
+exit
 if [ "$RUN_BY_CRON" == "TRUE" ] ; then
             RUNTIME=$(date +"%H%M")
             echo "$RUNDATE" >> $logfile 2>&1
