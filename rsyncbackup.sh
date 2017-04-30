@@ -64,6 +64,7 @@ fi
 main()
 {
 clear
+echo "rsyncbackup.sh including monthly check"
 PS3='Backup (1), Restore (2), or Quit (3): '
 mainmenu=("Backup" "Restore" "Quit")
 select mmopt in  "${mainmenu[@]}"
