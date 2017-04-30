@@ -1,5 +1,6 @@
 #!/bin/bash
 # Branch to add monthly check
+# Edited on the website
 DAY=$(date +"%u-%A")
 dateDiff=1
 dayMinusone=$(date --date="${DAY} -${dateDiff} day" +%u-%A)
