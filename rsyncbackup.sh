@@ -171,7 +171,7 @@ do
 	esac
 done
 }
-
+echo "rsyncbackup.sh with monthly check - Work in Progress"
 check
 RUN_BY_CRON="FALSE"
 exit
