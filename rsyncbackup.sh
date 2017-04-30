@@ -2,19 +2,19 @@
 # Branch to add monthly check
 # Edited on the website
 # Edited on the computer
-DAY=$(date +"%u-%A")
-dateDiff=1
-dayMinusone=$(date --date="${DAY} -${dateDiff} day" +%u-%A)
-RUNDATE=$(date +"%A %d %m %Y")
-WEEK=$(date +"WEEK-%W[%d-%b-%Y]")
+vDay=$(date +"%u-%A")
+vDateDiff=1
+vDayMinusOne=$(date --date="${vDay} -${vDateDiff} day" +%u-%A)
+vRunDate=$(date +"%A %d %m %Y")
+vWeek=$(date +"WEEK-%W[%d-%b-%Y]")
 mkdir -p /home/shared/log_files/
 mkdir -p /home/shared/rbackup/daily/
 mkdir -p /home/shared/rbackup/weekly/
-logfile="/home/shared/log_files/rsyncbackup.log"
+vLogFile="/home/shared/log_files/rsyncbackup.log"
 
 roptions="-aAXHvq"
 rsource="/"
-rdest="/home/shared/rbackup/daily/$DAY"
+rdest="/home/shared/rbackup/daily/$vDay"
 rsnapshot="/home/shared/rbackup/daily/0-snapshot"
 weekDest="/home/shared/rbackup/weekly"
 weekSource="/home/shared/rbackup/daily"
@@ -30,30 +30,31 @@ fi
 check()
 {
 if [ "$RUN_BY_CRON" == "TRUE" ] ; then
-	if [ "$DAY" == "1-Monday" ]; then
-		echo "$RUNDATE" >> $logfile 2>&1
-	    	echo " Moving Sundays files to weekly" >> $logfile 2>&1
+	if [ "$vDay" == "1-Monday" ]; then
+		echo "$vRunDate" >> $
+		2>&1
+	    	echo " Moving Sundays files to weekly" >> $vLogFile 2>&1
 	    	RUNTIME=$(date +"%H%M")
-	    	echo " Start Time: $RUNTIME hrs" >> $logfile 2>&1
-	    	echo "  using: mkdir -p $weekDest/$WEEK" >> $logfile 2>&1
-	    	mkdir -p $weekDest/$WEEK
-            	echo "         cp -r $weekSource/$dayMinusone/* $weekDest/$WEEK" >> $logfile 2>&1
-            	cp -r  $weekSource/$dayMinusone/* $weekDest/$WEEK
+	    	echo " Start Time: $RUNTIME hrs" >> $vLogFile 2>&1
+	    	echo "  using: mkdir -p $weekDest/$vWeek" >> $vLogFile 2>&1
+	    	mkdir -p $weekDest/$vWeek
+            	echo "         cp -r $weekSource/$vDayMinusOne/* $weekDest/$vWeek" >> $vLogFile 2>&1
+            	cp -r  $weekSource/$vDayMinusOne/* $weekDest/$vWeek
             	RUNTIME=$(date +"%H%M")
-            	echo " End Time: $RUNTIME hrs" >> $logfile 2>&1
-            	echo "" >> $logfile 2>&1
+            	echo " End Time: $RUNTIME hrs" >> $vLogFile 2>&1
+            	echo "" >> $vLogFile 2>&1
 	fi
 	RUNTIME=$(date +"%H%M")
-        echo "$RUNDATE" >> $logfile 2>&1
-        echo "Start Time: $RUNTIME hrs" >> $logfile 2>&1
-        echo "Daily backup ran by cron" >> $logfile 2>&1
-        echo 'Using: /usr/bin/rsync '$roptions' --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/home/shared/bookupload/*"} --delete '$rsource' '$rdest'' >> $logfile 2>&1
+        echo "$vRunDate" >> $vLogFile 2>&1
+        echo "Start Time: $RUNTIME hrs" >> $vLogFile 2>&1
+        echo "Daily backup ran by cron" >> $vLogFile 2>&1
+        echo 'Using: /usr/bin/rsync '$roptions' --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/home/shared/bookupload/*"} --delete '$rsource' '$rdest'' >> $vLogFile 2>&1
         /usr/bin/rsync $roptions --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/home/shared/calibre_library/*","/home/shared/bookupload/*"} --delete --delete-excluded $rsource $rdest
 	/usr/bin/touch $rdest
-        du -sh $rdest >> $logfile 2>&1
+        du -sh $rdest >> $vLogFile 2>&1
         RUNTIME=$(date +"%H%M")
-        echo "End Time: $RUNTIME hrs" >> $logfile 2>&1
-        echo "" >> $logfile 2>&1
+        echo "End Time: $RUNTIME hrs" >> $vLogFile 2>&1
+        echo "" >> $vLogFile 2>&1
 	exit
 else
 	main
@@ -95,30 +96,30 @@ do
 	case $backupopt in
 		"Daily")
 			RUNTIME=$(date +"%H%M")
-			echo "$RUNDATE" >> $logfile 2>&1
-			echo "Start Time: $RUNTIME hrs" >> $logfile 2>&1
-			echo "Daily backup ran by hand" >> $logfile 2>&1
-			echo 'Using: /usr/bin/rsync '$roptions' --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/home/shared/calibre_library/*","/home/shared/bookupload/*"} --delete '$rsource' '$rdest'' >> $logfile 2>&1
-			/usr/bin/rsync $roptions --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/home/shared/calibre_library/*","/home/shared/bookupload/*"} --delete --delete-excluded $rsource $rdest >> $logfile 2>&1
+			echo "$vRunDate" >> $vLogFile 2>&1
+			echo "Start Time: $RUNTIME hrs" >> $vLogFile 2>&1
+			echo "Daily backup ran by hand" >> $vLogFile 2>&1
+			echo 'Using: /usr/bin/rsync '$roptions' --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/home/shared/calibre_library/*","/home/shared/bookupload/*"} --delete '$rsource' '$rdest'' >> $vLogFile 2>&1
+			/usr/bin/rsync $roptions --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/home/shared/calibre_library/*","/home/shared/bookupload/*"} --delete --delete-excluded $rsource $rdest >> $vLogFile 2>&1
 			/usr/bin/touch $rdest
-			du -sh $rdest >> $logfile 2>&1
+			du -sh $rdest >> $vLogFile 2>&1
 			RUNTIME=$(date +"%H%M")
-			echo "End Time: $RUNTIME hrs" >> $logfile 2>&1
-			echo "" >> $logfile 2>&1
+			echo "End Time: $RUNTIME hrs" >> $vLogFile 2>&1
+			echo "" >> $vLogFile 2>&1
 			pause
 		;;
   		"Snapshot")
 			RUNTIME=$(date +"%H%M")
-			echo "$RUNDATE" >> $logfile 2>&1
-			echo "Start Time: $RUNTIME hrs" >> $logfile 2>&1
-			echo "Snapshot ran by hand" >> $logfile 2>&1
-			echo 'Using: /usr/bin/rsync '$roptions' --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/exc_dir/*","/home/shared/calibre_library/*","/home/shared/bookupload/*"} --delete '$rsource' '$rsnapshot'' >> $logfile 2>&1
+			echo "$vRunDate" >> $vLogFile 2>&1
+			echo "Start Time: $RUNTIME hrs" >> $vLogFile 2>&1
+			echo "Snapshot ran by hand" >> $vLogFile 2>&1
+			echo 'Using: /usr/bin/rsync '$roptions' --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/exc_dir/*","/home/shared/calibre_library/*","/home/shared/bookupload/*"} --delete '$rsource' '$rsnapshot'' >> $vLogFile 2>&1
 			/usr/bin/rsync $roptions --exclude={"/home/shared/Backups/*","/home/shared/oldstuff/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/shared/rbackup/*","/home/shared/CentOS/*","/home/shared/iars/*","/home/shared/log_files/*","/home/shared/oars/*","/home/shared/opensim_terrains/*","/home/shared/opensim_terrain_textures/*","/home/shared/run_files/*","/home/grid/gridservers/bin/assetcache/*","/home/shared/rbackup/daily/*","/home/shared/exc_dir/*","/home/shared/calibre_library/*","/home/shared/bookupload/*"} --delete --delete-excluded $rsource $rsnapshot
 			/usr/bin/touch $rsnapshot
-			du -sh $rsnapshot >> $logfile 2>&1
+			du -sh $rsnapshot >> $vLogFile 2>&1
 			RUNTIME=$(date +"%H%M")
-			echo "End Time: $RUNTIME hrs" >> $logfile 2>&1
-			echo "" >> $logfile 2>&1
+			echo "End Time: $RUNTIME hrs" >> $vLogFile 2>&1
+			echo "" >> $vLogFile 2>&1
 			pause
 		;;
 		"Quit")
